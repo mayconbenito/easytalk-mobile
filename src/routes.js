@@ -2,6 +2,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
+import AuthHandler from '~/screens/AuthHandler';
 import Chat from '~/screens/Chat';
 import Chats from '~/screens/Chats';
 import Friends from '~/screens/Friends';
@@ -66,9 +67,9 @@ const AuthStack = createStackNavigator(
 );
 
 const MainStack = createSwitchNavigator(
-  { AppStack, AuthStack },
+  { AppStack, AuthStack, AuthHandler },
   {
-    initialRouteName: 'AppStack',
+    initialRouteName: 'AuthHandler',
   }
 );
 
