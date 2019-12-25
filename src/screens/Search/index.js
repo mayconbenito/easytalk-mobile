@@ -67,7 +67,11 @@ function Search({ navigation }) {
 
       <List>
         {results.map(data => (
-          <UserItem key={data._id} data={data} />
+          <UserItem
+            key={data._id}
+            data={data}
+            onPress={() => navigation.navigate('User', { data })}
+          />
         ))}
       </List>
     </Container>
