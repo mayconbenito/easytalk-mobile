@@ -9,6 +9,7 @@ import Friends from '~/screens/Friends';
 import Login from '~/screens/Login';
 import Register from '~/screens/Register';
 import Search from '~/screens/Search';
+import User from '~/screens/User';
 
 const HomeStack = createMaterialTopTabNavigator(
   {
@@ -54,6 +55,7 @@ const AppStack = createStackNavigator({
   },
   Search,
   Chat,
+  User,
 });
 
 const AuthStack = createStackNavigator(
