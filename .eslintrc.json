@@ -62,7 +62,8 @@
     "radix": "off",
     "consistent-return": "off",
     "no-console": "off",
-    "no-param-reassign": "off"
+    "no-param-reassign": "off",
+    "no-underscore-dangle": "off"
   },
   "settings": {
     "import/resolver": {

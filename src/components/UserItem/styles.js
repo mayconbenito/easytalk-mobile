@@ -1,6 +1,8 @@
 import styled from 'styled-components/native';
 
-export const Container = styled.View`
+export const Container = styled.TouchableOpacity.attrs({
+  activeOpacity: 0.7,
+})`
   flex-direction: row;
   padding-horizontal: 10;
   padding-vertical: 5;
@@ -25,9 +27,4 @@ export const Title = styled.Text`
   font-size: 18;
   font-weight: bold;
   color: #000;
-`;
-
-export const Description = styled.Text`
-  font-size: 16;
-  color: #606060;
 `;
