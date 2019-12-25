@@ -1,14 +1,13 @@
 import React from 'react';
 
-import { Container, Image, Details, Title, Description } from './styles';
+import { Container, Image, Details, Title } from './styles';
 
-export default function ChatItem({ onPress }) {
+export default function ChatItem({ data, onPress }) {
   return (
     <Container onPress={onPress}>
       <Image />
       <Details>
-        <Title>Chat Name</Title>
-        <Description>Last Sent Message</Description>
+        <Title>{data.name}</Title>
       </Details>
     </Container>
   );

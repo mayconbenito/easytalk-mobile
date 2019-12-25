@@ -1,16 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import React, { useRef, useState, useEffect } from 'react';
 import { TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
-import { Container, Header, InputContainer, Input } from './styles';
-
+import UserItem from '~/components/UserItem';
 import api from '~/services/api';
 
-import UserItem from '~/components/UserItem';
+import { Container, Header, InputContainer, Input, List } from './styles';
 
 function Search({ navigation }) {
   const [query, setQuery] = useState('');
   const [results, setResults] = useState([]);
+  const isInitialMount = useRef(true);
 
   useEffect(() => {
     async function fetchSearch() {
@@ -22,23 +22,19 @@ function Search({ navigation }) {
           },
         });
 
-        console.log(response.data.users);
-
         setResults(response.data.users);
-      } catch (e) {
-        console.log(e);
+      } catch (err) {
+        console.log(err);
       }
     }
 
-    fetchSearch();
-
-    // if (isInitialMount.current) {
-    //   isInitialMount.current = false;
-    // } else if (query !== '') {
-    //   fetchSearch();
-    // } else {
-    //   setResults({ artists: [], albums: [], tracks: [] });
-    // }
+    if (isInitialMount.current) {
+      isInitialMount.current = false;
+    } else if (query !== '') {
+      fetchSearch();
+    } else {
+      setResults([]);
+    }
   }, [query]);
 
   function onInputChange(txt) {
@@ -57,8 +53,9 @@ function Search({ navigation }) {
         </TouchableOpacity>
         <InputContainer>
           <Input
-            placeholder="Buscar por artistas e músicas"
+            placeholder="Buscar por usuários"
             autoFocus
+            value={query}
             onChangeText={onInputChange}
           />
 
@@ -68,9 +65,11 @@ function Search({ navigation }) {
         </InputContainer>
       </Header>
 
-      {results.map(() => (
-        <UserItem />
-      ))}
+      <List>
+        {results.map(data => (
+          <UserItem key={data._id} data={data} />
+        ))}
+      </List>
     </Container>
   );
 }
