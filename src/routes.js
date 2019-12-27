@@ -5,7 +5,7 @@ import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 import AuthHandler from '~/screens/AuthHandler';
 import Chat from '~/screens/Chat';
 import Chats from '~/screens/Chats';
-import Friends from '~/screens/Friends';
+import Contacts from '~/screens/Contacts';
 import Login from '~/screens/Login';
 import Register from '~/screens/Register';
 import Search from '~/screens/Search';
@@ -19,10 +19,10 @@ const HomeStack = createMaterialTopTabNavigator(
         title: 'Conversas',
       },
     },
-    Friends: {
-      screen: Friends,
+    Contacts: {
+      screen: Contacts,
       navigationOptions: {
-        title: 'Amigos',
+        title: 'Contatos',
       },
     },
   },
