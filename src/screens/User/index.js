@@ -1,9 +1,11 @@
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import { useDispatch } from 'react-redux';
 
 import Loading from '~/components/Loading';
 import api from '~/services/api';
+import { Creators as ContactActions } from '~/store/ducks/contact';
 
 import {
   Container,
@@ -16,6 +18,7 @@ import {
 } from './styles';
 
 function User({ navigation }) {
+  const dispatch = useDispatch();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
   const userId = navigation.state.params.data._id;
@@ -41,6 +44,8 @@ function User({ navigation }) {
 
       if (response.status === 204) {
         setUser({ ...user, isContact: true });
+        dispatch(ContactActions.clearState());
+        dispatch(ContactActions.fetchContacts());
       }
     } catch (err) {
       console.log(err);
@@ -53,6 +58,8 @@ function User({ navigation }) {
 
       if (response.status === 204) {
         setUser({ ...user, isContact: false });
+        dispatch(ContactActions.clearState());
+        dispatch(ContactActions.fetchContacts());
       }
     } catch (err) {
       console.log(err);
