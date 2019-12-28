@@ -2,8 +2,8 @@ import { createActions, createReducer } from 'reduxsauce';
 
 export const { Types, Creators } = createActions(
   {
-    sendMessage: ['message', 'reciverId'],
-    successSendMessage: ['chatId'],
+    fetchChats: [],
+    successFetchChats: ['data'],
   },
   {
     prefix: 'chat/',
@@ -11,35 +11,19 @@ export const { Types, Creators } = createActions(
 );
 
 const initialState = {
-  chats: [
-    {
-      id: 'adasda',
-      lastSentMessage: '',
-      reciver: { id: 2, image: '' },
-      sender: { id: 1, image: '' },
-      messages: [
-        {
-          data: '',
-          sender: { id: 1, image: '' },
-          reciver: { id: 2, image: '' },
-          sendedAt: '',
-        },
-      ],
-    },
-  ],
+  data: [],
+  loading: true,
 };
 
-const sendMessage = (state = initialState) => {
-  return {
-    ...state,
-  };
+const fetchChats = (state = initialState) => {
+  return { ...state, loading: true };
 };
 
-const successSendMessage = (state = initialState) => {
-  return state;
+const successFetchChats = (state = initialState, action) => {
+  return { ...state, data: action.data, loading: false };
 };
 
 export default createReducer(initialState, {
-  [Types.SEND_MESSAGE]: sendMessage,
-  [Types.SUCCESS_SEND_MESSAGE]: successSendMessage,
+  [Types.FETCH_CHATS]: fetchChats,
+  [Types.SUCCESS_FETCH_CHATS]: successFetchChats,
 });

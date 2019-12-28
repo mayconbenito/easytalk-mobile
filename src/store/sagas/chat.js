@@ -4,19 +4,18 @@ import api from '~/services/api';
 
 import { Types as ChatTypes, Creators as ChatActions } from '../ducks/chat';
 
-const { successSendMessage } = ChatActions;
+const { successFetchChats } = ChatActions;
 
-function* sendMessage() {
+function* fetchChats() {
   try {
-    const reciverId = '';
-    yield call(api.post, `/messages/${reciverId}`);
+    const response = yield call(api.get, '/chats');
 
-    yield put(successSendMessage());
+    yield put(successFetchChats(response.data.chats));
   } catch (err) {
     console.log(err);
   }
 }
 
 export default function* chatSaga() {
-  yield all([takeLatest(ChatTypes.SEND_MESSAGE, sendMessage)]);
+  yield all([takeLatest(ChatTypes.FETCH_CHATS, fetchChats)]);
 }
