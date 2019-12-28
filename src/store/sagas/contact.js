@@ -18,7 +18,7 @@ function* fetchContacts() {
     });
 
     yield put(
-      successContacts(response.data.contacts, response.data.metadata.totalItems)
+      successContacts(response.data.contacts, response.data.meta.total)
     );
   } catch (err) {
     console.log(err);
@@ -31,9 +31,7 @@ function* refreshContacts({ page = 1 }) {
       params: { page },
     });
 
-    yield put(
-      successRefresh(response.data.contacts, response.data.metadata.totalItems)
-    );
+    yield put(successRefresh(response.data.contacts, response.data.meta.total));
   } catch (err) {
     console.log(err);
   }
