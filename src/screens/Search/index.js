@@ -18,7 +18,7 @@ function Search({ navigation }) {
         const response = await api.get('/search/users/', {
           params: {
             searchText: query,
-            page: 1,
+            limit: 30,
           },
         });
 
