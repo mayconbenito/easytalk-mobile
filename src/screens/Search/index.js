@@ -65,15 +65,16 @@ function Search({ navigation }) {
         </InputContainer>
       </Header>
 
-      <List>
-        {results.map(data => (
+      <List
+        data={results}
+        keyExtractor={item => item._id}
+        renderItem={({ item }) => (
           <UserItem
-            key={data._id}
-            data={data}
-            onPress={() => navigation.navigate('User', { data })}
+            data={item}
+            onPress={() => navigation.navigate('User', { data: item })}
           />
-        ))}
-      </List>
+        )}
+      />
     </Container>
   );
 }
