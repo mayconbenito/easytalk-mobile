@@ -36,10 +36,6 @@ export const Input = styled.TextInput.attrs({
 
 export const Results = styled.View``;
 
-export const List = styled.ScrollView.attrs({
-  contentContainerStyle: {
-    paddingHorizontal: 10,
-    paddingVertical: 10,
-  },
+export const List = styled.FlatList.attrs({
   keyboardShouldPersistTaps: 'always',
 })``;
