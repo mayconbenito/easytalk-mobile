@@ -8,7 +8,7 @@ const { successFetchChats } = ChatActions;
 
 function* fetchChats() {
   try {
-    const response = yield call(api.get, '/chats');
+    const response = yield call(api.get, '/me/chats');
 
     yield put(successFetchChats(response.data.chats));
   } catch (err) {
