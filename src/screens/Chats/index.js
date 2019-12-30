@@ -43,7 +43,7 @@ export default function Chats({ navigation }) {
         )}
 
         {!chats.loading && !chats.data.length > 0 && (
-          <WarningMessage>Voce não possui nenhuma conversa.</WarningMessage>
+          <WarningMessage>Você não possui nenhuma conversa.</WarningMessage>
         )}
       </Container>
       <FloatingAction

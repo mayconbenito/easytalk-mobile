@@ -8,7 +8,7 @@ import ContactItem from '~/components/ContactItem';
 import Loading from '~/components/Loading';
 import { Creators as ContactActions } from '~/store/ducks/contact';
 
-import { Container } from './styles';
+import { Container, WarningMessage } from './styles';
 
 export default function Contacts({ navigation }) {
   const dispatch = useDispatch();
@@ -33,7 +33,7 @@ export default function Contacts({ navigation }) {
       <Container>
         {contacts.loading && <Loading />}
 
-        {!contacts.loading && (
+        {!contacts.loading && contacts.data.length > 0 && (
           <FlatList
             data={contacts.data}
             keyExtractor={item => item._id}
@@ -48,6 +48,10 @@ export default function Contacts({ navigation }) {
             refreshing={contacts.loading}
             onRefresh={refresh}
           />
+        )}
+
+        {!contacts.loading && !contacts.data.length > 0 && (
+          <WarningMessage>Você não possui nenhum contato.</WarningMessage>
         )}
       </Container>
       <FloatingAction
