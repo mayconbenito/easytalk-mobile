@@ -1,11 +1,12 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
+import { useSelector } from 'react-redux';
 
 export default function AuthHandler({ navigation }) {
+  const session = useSelector(state => state.session);
+
   async function verifyAuth() {
-    const jwt = await AsyncStorage.getItem('@EasyTalk:Token');
-    if (jwt) {
+    if (session.jwt) {
       navigation.navigate('AppStack');
     } else {
       navigation.navigate('AuthStack');

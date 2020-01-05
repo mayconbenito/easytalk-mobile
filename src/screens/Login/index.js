@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import api from '~/services/api';
+import { Creators as LoginActions } from '~/store/ducks/login';
 
 import {
   Container,
@@ -16,31 +16,14 @@ import {
 } from './styles';
 
 function Login({ navigation }) {
+  const dispatch = useDispatch();
+  const login = useSelector(state => state.login);
+
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   async function handleSubmit() {
-    try {
-      const response = await api.post('/sessions', {
-        email,
-        password,
-      });
-
-      if (response.data.jwt) {
-        await AsyncStorage.setItem('@EasyTalk:Token', response.data.jwt);
-        navigation.navigate('AppStack');
-      }
-    } catch (err) {
-      console.log(err);
-      if (err.response.status === 400) {
-        setError('Formato de e-mail ou senha invalido');
-      }
-
-      if (err.response.status === 401) {
-        setError('E-mail ou senha incorreto');
-      }
-    }
+    dispatch(LoginActions.requestLogin({ email, password }));
   }
 
   return (
@@ -74,7 +57,7 @@ function Login({ navigation }) {
         </NavigationContainer>
 
         <ErrorContainer>
-          <ErrorMessage>{error}</ErrorMessage>
+          <ErrorMessage>{login.error}</ErrorMessage>
         </ErrorContainer>
       </Form>
     </Container>

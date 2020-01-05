@@ -7,18 +7,19 @@ import {
   Creators as ContactAction,
 } from '../ducks/contact';
 
-const { successContacts, successRefresh } = ContactAction;
-
 function* fetchContacts() {
   try {
-    const state = yield select();
+    const contact = yield select(state => state.contact);
 
     const response = yield call(api.get, `/me/contacts/`, {
-      params: { page: state.contact.page },
+      params: { page: contact.page },
     });
 
     yield put(
-      successContacts(response.data.contacts, response.data.meta.total)
+      ContactAction.successContacts(
+        response.data.contacts,
+        response.data.meta.total
+      )
     );
   } catch (err) {
     console.log(err);
@@ -27,11 +28,21 @@ function* fetchContacts() {
 
 function* refreshContacts({ page = 1 }) {
   try {
+    const session = yield select(state => state.session);
+
+    if (session.jwt)
+      api.defaults.headers.Authorization = `Bearer ${session.jwt}`;
+
     const response = yield call(api.get, `/me/contacts/`, {
       params: { page },
     });
 
-    yield put(successRefresh(response.data.contacts, response.data.meta.total));
+    yield put(
+      ContactAction.successRefresh(
+        response.data.contacts,
+        response.data.meta.total
+      )
+    );
   } catch (err) {
     console.log(err);
   }
