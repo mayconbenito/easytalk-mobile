@@ -4,13 +4,11 @@ import api from '~/services/api';
 
 import { Types as ChatTypes, Creators as ChatActions } from '../ducks/chat';
 
-const { successFetchChats } = ChatActions;
-
 function* fetchChats() {
   try {
     const response = yield call(api.get, '/me/chats');
 
-    yield put(successFetchChats(response.data.chats));
+    yield put(ChatActions.successFetchChats(response.data.chats));
   } catch (err) {
     console.log(err);
   }

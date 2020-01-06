@@ -1,7 +1,7 @@
-import AsyncStorage from '@react-native-community/async-storage';
 import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
 
-import api from '~/services/api';
+import { Creators as RegisterActions } from '~/store/ducks/register';
 
 import {
   Container,
@@ -16,36 +16,15 @@ import {
 } from './styles';
 
 function Register({ navigation }) {
+  const dispatch = useDispatch();
+  const register = useSelector(state => state.register);
+
   const [username, setUsername] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const [error, setError] = useState('');
 
   async function handleSubmit() {
-    try {
-      const response = await api.post('/register', {
-        username,
-        email,
-        password,
-      });
-
-      if (response.data.jwt) {
-        await AsyncStorage.setItem('@EasyTalk:Token', response.data.jwt);
-        navigation.navigate('AppStack');
-      }
-    } catch (err) {
-      console.log(err);
-      if (err.response.status === 400) {
-        setError('Formato de nome de usuário, e-mail ou senha invalido');
-      }
-
-      if (
-        err.response.status === 400 &&
-        err.response.data.code === 'EMAIL_ALREADY_USED'
-      ) {
-        setError('E-mail já em uso por outro usuário');
-      }
-    }
+    dispatch(RegisterActions.requestRegister({ username, email, password }));
   }
 
   return (
@@ -82,7 +61,7 @@ function Register({ navigation }) {
         </NavigationContainer>
 
         <ErrorContainer>
-          <ErrorMessage>{error}</ErrorMessage>
+          <ErrorMessage>{register.error}</ErrorMessage>
         </ErrorContainer>
       </Form>
     </Container>
