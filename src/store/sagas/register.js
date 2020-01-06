@@ -3,12 +3,16 @@ import { put, call, all, takeLatest } from 'redux-saga/effects';
 import api from '~/services/api';
 import navigation from '~/services/navigation';
 
-import { Types as LoginTypes, Creators as LoginActions } from '../ducks/login';
+import {
+  Types as RegisterTypes,
+  Creators as RegisterActions,
+} from '../ducks/register';
 import { Creators as SessionActions } from '../ducks/session';
 
-export function* requestLogin({ data }) {
+export function* requestRegister({ data }) {
   try {
-    const response = yield call(api.post, '/sessions', {
+    const response = yield call(api.post, '/register', {
+      username: data.username,
       email: data.email,
       password: data.password,
     });
@@ -24,22 +28,27 @@ export function* requestLogin({ data }) {
   } catch (err) {
     if (err.response.status === 400) {
       yield put(
-        LoginActions.failureLogin(
+        RegisterActions.failureRegister(
           'Formato de nome de usuário, e-mail ou senha invalido'
         )
       );
     }
 
-    if (err.response.status === 401) {
-      yield put(LoginActions.failureLogin('Email ou senha incorretos'));
+    if (
+      err.response.status === 400 &&
+      err.response.data.code === 'EMAIL_ALREADY_USED'
+    ) {
+      yield put(
+        RegisterActions.failureRegister('E-mail já em uso por outro usuário')
+      );
     }
 
     if (err.response.status === 500) {
-      yield put(LoginActions.failureLogin('Erro interno no servidor'));
+      yield put(RegisterActions.failureRegister('Erro interno no servidor'));
     }
   }
 }
 
-export default function* loginSaga() {
-  yield all([takeLatest(LoginTypes.REQUEST_LOGIN, requestLogin)]);
+export default function* registerSaga() {
+  yield all([takeLatest(RegisterTypes.REQUEST_REGISTER, requestRegister)]);
 }
