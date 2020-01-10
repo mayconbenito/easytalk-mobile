@@ -25,7 +25,7 @@ export default function Chats({ navigation }) {
   return (
     <>
       <Container>
-        {chats.loading && <Loading />}
+        {chats.loading && <Loading loading={chats.loading} />}
 
         {!chats.loading && chats.data.length > 0 && (
           <FlatList
@@ -34,7 +34,7 @@ export default function Chats({ navigation }) {
             renderItem={({ item }) => (
               <ChatItem
                 data={item}
-                onPress={() => navigation.navigate('Chat')}
+                onPress={() => navigation.navigate('Chat', { data: item })}
               />
             )}
             refreshing={chats.loading}
