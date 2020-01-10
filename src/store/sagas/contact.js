@@ -4,7 +4,7 @@ import api from '~/services/api';
 
 import {
   Types as ContactTypes,
-  Creators as ContactAction,
+  Creators as ContactActions,
 } from '../ducks/contact';
 
 function* fetchContacts() {
@@ -16,7 +16,7 @@ function* fetchContacts() {
     });
 
     yield put(
-      ContactAction.successContacts(
+      ContactActions.successContacts(
         response.data.contacts,
         response.data.meta.total
       )
@@ -38,7 +38,7 @@ function* refreshContacts({ page = 1 }) {
     });
 
     yield put(
-      ContactAction.successRefresh(
+      ContactActions.successRefresh(
         response.data.contacts,
         response.data.meta.total
       )

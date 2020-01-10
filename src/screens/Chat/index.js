@@ -1,56 +1,45 @@
-import React from 'react';
-import { TouchableOpacity, FlatList, View, Text } from 'react-native';
+import React, { useEffect, useState, useRef } from 'react';
+import { TouchableOpacity, FlatList } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 
-import { Creators as ChatActions } from '~/store/ducks/chat';
+import Loading from '~/components/Loading';
+import Message from '~/components/Message';
+import { Creators as MessageActions } from '~/store/ducks/message';
 
 import { Container, Header, HeaderDetails, Image, Name, Input } from './styles';
 
-function Message({ mine }) {
-  return (
-    <View
-      style={{
-        alignSelf: mine ? 'flex-end' : 'flex-start',
-        backgroundColor: '#ccc',
-        borderRadius: 3,
-        marginBottom: 5,
-        padding: 5,
-      }}
-    >
-      <Text>Message</Text>
-    </View>
-  );
-}
-
 function Chat({ navigation }) {
   const dispatch = useDispatch();
-  // const scroll = useRef();
+  const session = useSelector(state => state.session);
+  const message = useSelector(state => state.message);
 
-  const data = [
-    { mine: true },
-    { mine: false },
-    { mine: true },
-    { mine: true },
-    { mine: true },
-    { mine: false },
-    { mine: false },
-    { mine: false },
-    { mine: false },
-    { mine: false },
-    { mine: true },
-    { mine: true },
-    { mine: true },
-    { mine: false },
-    { mine: false },
-    { mine: false },
-    { mine: true },
-    { mine: true },
-    { mine: true },
-    { mine: false },
-    { mine: false },
-    { mine: false },
-  ];
+  const [messages, setMessages] = useState([]);
+
+  const scroll = useRef();
+  const navigationState = navigation.state.params.data;
+
+  useEffect(() => {
+    dispatch(MessageActions.fetchMessages(navigationState._id, 1));
+
+    return () => {
+      dispatch(MessageActions.clearState());
+    };
+  }, []);
+
+  useEffect(() => {
+    if (message.chats && message.chats.length > 0) {
+      const chat = message.chats.find(
+        chats => chats._id === navigationState._id
+      );
+      setMessages(chat.messages);
+    }
+  }, [message.chats]);
+
+  function endReached() {
+    if (!message.loading && message.total > messages.length)
+      dispatch(MessageActions.fetchMessages(navigationState._id, message.page));
+  }
 
   return (
     <Container>
@@ -60,24 +49,33 @@ function Chat({ navigation }) {
         </TouchableOpacity>
         <HeaderDetails>
           <Image />
-          <Name>User Name</Name>
+          <Name>{navigationState.sender.name}</Name>
         </HeaderDetails>
       </Header>
-      <FlatList
-        // ref={scroll}
-        // onContentSizeChange={() =>
-        //   scroll.current.scrollToEnd({ animated: true })
-        // }
-        contentContainerStyle={{ padding: 10 }}
-        data={data}
-        inverted
-        keyExtractor={() => `${Math.random()}`}
-        renderItem={({ item }) => <Message mine={item.mine} />}
-      />
-      <Input
-        placeholder="Enviar Mensagem"
-        onSubmitEditing={() => dispatch(ChatActions.sendMessage('Hello World'))}
-      />
+
+      {message.loading && message.page === 1 ? (
+        <Loading loading={message.loading} />
+      ) : (
+        <FlatList
+          style={{ padding: 10 }}
+          ref={scroll}
+          inverted
+          data={messages}
+          onEndReached={endReached}
+          keyExtractor={item => item._id}
+          ListFooterComponent={
+            <Loading
+              style={{ marginTop: 13 }}
+              size={24}
+              loading={message.loading}
+            />
+          }
+          renderItem={({ item }) => (
+            <Message message={item.data} mine={item.senderId === session._id} />
+          )}
+        />
+      )}
+      <Input placeholder="Enviar Mensagem" />
     </Container>
   );
 }

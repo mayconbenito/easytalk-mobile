@@ -31,7 +31,7 @@ export default function Contacts({ navigation }) {
   return (
     <>
       <Container>
-        {contacts.loading && <Loading />}
+        {contacts.loading && <Loading loading={contacts.loading} />}
 
         {!contacts.loading && contacts.data.length > 0 && (
           <FlatList

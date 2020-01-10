@@ -8,6 +8,7 @@ import sagas from './sagas';
 
 const persistConfig = {
   key: 'root',
+  whitelist: ['session', 'chats', 'contacts'],
   storage: AsyncStorage,
 };
 
