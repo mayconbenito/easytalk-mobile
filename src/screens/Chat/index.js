@@ -1,4 +1,4 @@
-import React, { useEffect, useState, useRef } from 'react';
+import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, FlatList } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,12 +12,17 @@ import { Container, Header, HeaderDetails, Image, Name, Input } from './styles';
 function Chat({ navigation }) {
   const dispatch = useDispatch();
   const session = useSelector(state => state.session);
+
+  const [msgInput, setMsgInput] = useState('');
+
+  const navigationState = navigation.state.params.data;
+
   const message = useSelector(state => state.message);
 
-  const [messages, setMessages] = useState([]);
-
-  const scroll = useRef();
-  const navigationState = navigation.state.params.data;
+  const [messagesList = []] = useSelector(
+    state => state.message.chats,
+    chats => chats.find(chat => chat._id === navigationState._id)
+  );
 
   useEffect(() => {
     dispatch(MessageActions.fetchMessages(navigationState._id, 1));
@@ -27,18 +32,15 @@ function Chat({ navigation }) {
     };
   }, []);
 
-  useEffect(() => {
-    if (message.chats && message.chats.length > 0) {
-      const chat = message.chats.find(
-        chats => chats._id === navigationState._id
-      );
-      setMessages(chat.messages);
-    }
-  }, [message.chats]);
+  function handleSendMessage() {
+    dispatch(MessageActions.sendMessage(navigationState.sender._id, msgInput));
+    setMsgInput('');
+  }
 
   function endReached() {
-    if (!message.loading && message.total > messages.length)
+    if (!message.loading && message.total > messagesList.messages.length) {
       dispatch(MessageActions.fetchMessages(navigationState._id, message.page));
+    }
   }
 
   return (
@@ -58,10 +60,10 @@ function Chat({ navigation }) {
       ) : (
         <FlatList
           style={{ padding: 10 }}
-          ref={scroll}
           inverted
-          data={messages}
+          data={messagesList.messages}
           onEndReached={endReached}
+          onEndReachedThreshold={0.4}
           keyExtractor={item => item._id}
           ListFooterComponent={
             <Loading
@@ -75,7 +77,14 @@ function Chat({ navigation }) {
           )}
         />
       )}
-      <Input placeholder="Enviar Mensagem" />
+
+      <Input
+        value={msgInput}
+        onChangeText={txt => setMsgInput(txt)}
+        placeholder="Enviar Mensagem"
+        onSubmitEditing={handleSendMessage}
+        returnKeyType="send"
+      />
     </Container>
   );
 }
