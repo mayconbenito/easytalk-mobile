@@ -22,6 +22,7 @@ function* sendMessage({ reciverId, message }) {
           response.data.message
         )
       ),
+      put(ChatActions.addChatItemToList(response.data.chat)),
       put(ChatActions.updateChatLastSentMessage(response.data.chat, message)),
     ]);
   } catch (err) {

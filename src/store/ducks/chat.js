@@ -5,6 +5,7 @@ export const { Types, Creators } = createActions(
     fetchChats: [],
     successFetchChats: ['data'],
     updateChatLastSentMessage: ['chat', 'message'],
+    addChatItemToList: ['chat'],
   },
   {
     prefix: 'chat/',
@@ -40,8 +41,18 @@ const updateChatLastSentMessage = (state = initialState, action) => {
   };
 };
 
+const addChatItemToList = (state = initialState, action) => {
+  return {
+    ...state,
+    data: !state.data.find(chat => chat._id === action.chat._id)
+      ? [...state.data, action.chat]
+      : state.data,
+  };
+};
+
 export default createReducer(initialState, {
   [Types.FETCH_CHATS]: fetchChats,
   [Types.SUCCESS_FETCH_CHATS]: successFetchChats,
   [Types.UPDATE_CHAT_LAST_SENT_MESSAGE]: updateChatLastSentMessage,
+  [Types.ADD_CHAT_ITEM_TO_LIST]: addChatItemToList,
 });
