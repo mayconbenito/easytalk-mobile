@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Loading from '~/components/Loading';
 import Message from '~/components/Message';
+import api from '~/services/api';
 import { Creators as MessageActions } from '~/store/ducks/message';
 
 import { Container, Header, HeaderDetails, Image, Name, Input } from './styles';
@@ -14,32 +15,53 @@ function Chat({ navigation }) {
   const session = useSelector(state => state.session);
 
   const [msgInput, setMsgInput] = useState('');
+  const [chatId, setChatId] = useState(false);
 
-  const navigationState = navigation.state.params.data;
+  const navigationState = navigation.state.params;
 
   const message = useSelector(state => state.message);
 
+  useEffect(() => {
+    async function checkChatId() {
+      if (!navigationState.chat) {
+        try {
+          const createChat = await api.post('/chats', {
+            participants: [navigationState.user._id],
+          });
+
+          setChatId(createChat.data.chat._id);
+        } catch (err) {
+          console.log(err.response.data);
+        }
+      } else {
+        setChatId(navigationState.chat._id);
+      }
+    }
+
+    checkChatId();
+  }, []);
+
   const [messagesList = []] = useSelector(
     state => state.message.chats,
-    chats => chats.find(chat => chat._id === navigationState._id)
+    chats => chats.find(chat => chat._id === chatId)
   );
 
   useEffect(() => {
-    dispatch(MessageActions.fetchMessages(navigationState._id, 1));
+    if (chatId) dispatch(MessageActions.fetchMessages(chatId, 1));
 
     return () => {
       dispatch(MessageActions.clearState());
     };
-  }, []);
+  }, [chatId]);
 
   function handleSendMessage() {
-    dispatch(MessageActions.sendMessage(navigationState.sender._id, msgInput));
+    dispatch(MessageActions.sendMessage(navigationState.user._id, msgInput));
     setMsgInput('');
   }
 
   function endReached() {
     if (!message.loading && message.total > messagesList.messages.length) {
-      dispatch(MessageActions.fetchMessages(navigationState._id, message.page));
+      dispatch(MessageActions.fetchMessages(chatId, message.page));
     }
   }
 
@@ -51,7 +73,7 @@ function Chat({ navigation }) {
         </TouchableOpacity>
         <HeaderDetails>
           <Image />
-          <Name>{navigationState.sender.name}</Name>
+          <Name>{navigationState.user.name}</Name>
         </HeaderDetails>
       </Header>
 
