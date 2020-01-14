@@ -92,7 +92,7 @@ function User({ navigation }) {
               </Button>
             )}
 
-            <Button>
+            <Button onPress={() => navigation.navigate('Chat', { user })}>
               <ButtonText>Ver Conversa</ButtonText>
             </Button>
           </ButtonsContainer>

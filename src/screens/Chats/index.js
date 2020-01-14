@@ -34,7 +34,9 @@ export default function Chats({ navigation }) {
             renderItem={({ item }) => (
               <ChatItem
                 data={item}
-                onPress={() => navigation.navigate('Chat', { data: item })}
+                onPress={() =>
+                  navigation.navigate('Chat', { chat: item, user: item.sender })
+                }
               />
             )}
             refreshing={chats.loading}
