@@ -3,6 +3,7 @@ import { createActions, createReducer } from 'reduxsauce';
 export const { Types, Creators } = createActions(
   {
     createSession: ['data'],
+    deleteSession: [],
   },
   {
     prefix: 'session/',
@@ -16,6 +17,9 @@ const createSession = (state = initialState, action) => ({
   ...action.data,
 });
 
+const deleteSession = () => ({});
+
 export default createReducer(initialState, {
   [Types.CREATE_SESSION]: createSession,
+  [Types.DELETE_SESSION]: deleteSession,
 });
