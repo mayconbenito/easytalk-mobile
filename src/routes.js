@@ -1,3 +1,4 @@
+import React from 'react';
 import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
@@ -7,9 +8,12 @@ import Chat from '~/screens/Chat';
 import Chats from '~/screens/Chats';
 import Contacts from '~/screens/Contacts';
 import Login from '~/screens/Login';
+import Me from '~/screens/Me';
 import Register from '~/screens/Register';
 import Search from '~/screens/Search';
 import User from '~/screens/User';
+
+import HeaderUserIcon from './components/HeaderUserIcon';
 
 const HomeStack = createMaterialTopTabNavigator(
   {
@@ -43,7 +47,7 @@ const HomeStack = createMaterialTopTabNavigator(
 const AppStack = createStackNavigator({
   Home: {
     screen: HomeStack,
-    navigationOptions: {
+    navigationOptions: ({ navigation }) => ({
       title: 'EasyTalk',
       headerTintColor: '#fff',
       headerStyle: {
@@ -51,11 +55,13 @@ const AppStack = createStackNavigator({
         elevation: 0, // remove shadow on Android
         shadowOpacity: 0, // remove shadow on iOS
       },
-    },
+      headerRight: <HeaderUserIcon onPress={() => navigation.navigate('Me')} />,
+    }),
   },
   Search,
   Chat,
   User,
+  Me,
 });
 
 const AuthStack = createStackNavigator(
