@@ -4,8 +4,8 @@ export const { Types, Creators } = createActions(
   {
     fetchMessages: ['chatId', 'page'],
     successFetchMessages: ['chatId', 'data', 'total'],
-    sendMessage: ['reciverId', 'message'],
-    successSendMessage: ['reciverId', 'chat', 'message'],
+    sendMessage: ['chatId', 'message'],
+    successSendMessage: ['chat', 'message'],
     clearState: [],
   },
   {

@@ -55,7 +55,7 @@ function Chat({ navigation }) {
   }, [chatId]);
 
   function handleSendMessage() {
-    dispatch(MessageActions.sendMessage(navigationState.user._id, msgInput));
+    dispatch(MessageActions.sendMessage(chatId, msgInput));
     setMsgInput('');
   }
 

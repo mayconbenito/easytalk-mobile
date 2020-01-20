@@ -8,16 +8,15 @@ import {
   Creators as MessageActions,
 } from '../ducks/message';
 
-function* sendMessage({ reciverId, message }) {
+function* sendMessage({ chatId, message }) {
   try {
-    const response = yield call(api.post, `/messages/${reciverId}`, {
+    const response = yield call(api.post, `/messages/${chatId}`, {
       message,
     });
 
     yield all([
       put(
         MessageActions.successSendMessage(
-          reciverId,
           response.data.chat,
           response.data.message
         )
