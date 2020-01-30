@@ -6,6 +6,7 @@ export const { Types, Creators } = createActions(
     successFetchMessages: ['chatId', 'data', 'total'],
     sendMessage: ['chatId', 'message'],
     successSendMessage: ['chat', 'message'],
+    addMessageToChat: ['chat', 'message'],
     clearState: [],
   },
   {
@@ -71,6 +72,35 @@ const successSendMessage = (state = initialState, action) => {
   }
 };
 
+const addMessageToChat = (state = initialState, action) => {
+  if (state.chats.find(chats => chats._id === action.chat._id)) {
+    return {
+      ...state,
+      loading: false,
+      page: state.page + 1,
+      total: action.total,
+      chats: state.chats.map(chat => {
+        if (chat._id === action.chat._id) {
+          return { ...chat, messages: [action.message, ...chat.messages] };
+        }
+
+        return chat;
+      }),
+    };
+  }
+
+  return {
+    ...state,
+    loading: false,
+    page: state.page + 1,
+    total: action.total,
+    chats: [
+      ...state.chats,
+      { _id: action.chat._id, messages: [action.message] },
+    ],
+  };
+};
+
 const clearState = () => {
   return initialState;
 };
@@ -80,5 +110,6 @@ export default createReducer(initialState, {
   [Types.SUCCESS_FETCH_MESSAGES]: successFetchMessages,
   [Types.SEND_MESSAGE]: sendMessage,
   [Types.SUCCESS_SEND_MESSAGE]: successSendMessage,
+  [Types.ADD_MESSAGE_TO_CHAT]: addMessageToChat,
   [Types.CLEAR_STATE]: clearState,
 });
