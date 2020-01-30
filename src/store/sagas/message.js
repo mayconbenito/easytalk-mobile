@@ -10,7 +10,7 @@ import {
 
 function* sendMessage({ chatId, message }) {
   try {
-    const response = yield call(api.post, `/messages/${chatId}`, {
+    const response = yield call(api.post, `/chats/${chatId}/messages`, {
       message,
     });
 
