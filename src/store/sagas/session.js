@@ -8,6 +8,6 @@ export function deleteSession() {
   navigation.navigate('AuthStack');
 }
 
-export default function* loginSaga() {
+export default function* sessionSaga() {
   yield all([takeLatest(SessionTypes.DELETE_SESSION, deleteSession)]);
 }

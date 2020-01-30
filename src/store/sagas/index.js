@@ -6,6 +6,7 @@ import login from './login';
 import message from './message';
 import register from './register';
 import session from './session';
+import websocket from './websocket';
 
 export default function* rootSaga() {
   yield all([
@@ -15,5 +16,6 @@ export default function* rootSaga() {
     fork(chat),
     fork(contact),
     fork(message),
+    fork(websocket),
   ]);
 }

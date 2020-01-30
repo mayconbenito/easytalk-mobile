@@ -7,12 +7,21 @@ import { useDispatch, useSelector } from 'react-redux';
 import ChatItem from '~/components/ChatItem';
 import Loading from '~/components/Loading';
 import { Creators as ChatActions } from '~/store/ducks/chat';
+import { Creators as WSActions } from '~/store/ducks/websocket';
 
 import { Container, WarningMessage } from './styles';
 
 export default function Chats({ navigation }) {
   const dispatch = useDispatch();
   const chats = useSelector(state => state.chat);
+
+  const session = useSelector(state => state.session);
+
+  useEffect(() => {
+    if (session) {
+      dispatch(WSActions.wsConnect());
+    }
+  }, []);
 
   useEffect(() => {
     dispatch(ChatActions.fetchChats());

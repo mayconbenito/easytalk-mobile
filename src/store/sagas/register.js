@@ -19,6 +19,7 @@ export function* requestRegister({ data }) {
 
     yield put(
       SessionActions.createSession({
+        wsToken: response.data.wsToken,
         jwt: response.data.jwt,
         ...response.data.user,
       })
