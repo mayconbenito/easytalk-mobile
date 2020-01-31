@@ -2,6 +2,8 @@ import React from 'react';
 import { View, ActivityIndicator } from 'react-native';
 import { useSelector } from 'react-redux';
 
+import { colors } from '~/config/styles';
+
 export default function AuthHandler({ navigation }) {
   const session = useSelector(state => state.session);
 
@@ -21,10 +23,10 @@ export default function AuthHandler({ navigation }) {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
-        backgroundColor: '#fff',
+        backgroundColor: colors.WHITE,
       }}
     >
-      <ActivityIndicator animating color="#000" size={36} />
+      <ActivityIndicator animating color={colors.BLACK} size={36} />
     </View>
   );
 }

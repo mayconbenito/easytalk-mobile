@@ -4,6 +4,7 @@ import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch } from 'react-redux';
 
 import Loading from '~/components/Loading';
+import { colors } from '~/config/styles';
 import api from '~/services/api';
 import { Creators as SessionActions } from '~/store/ducks/session';
 
@@ -41,7 +42,7 @@ function Me({ navigation }) {
     <Container>
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={30} color="#fff" />
+          <MaterialIcons name="arrow-back" size={30} color={colors.WHITE} />
         </TouchableOpacity>
       </Header>
 

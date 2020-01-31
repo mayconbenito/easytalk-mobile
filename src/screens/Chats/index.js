@@ -1,15 +1,13 @@
 import React, { useEffect } from 'react';
-import { FlatList } from 'react-native';
-import { FloatingAction } from 'react-native-floating-action';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ChatItem from '~/components/ChatItem';
+import FloatingActionButton from '~/components/FloatingActionButton';
 import Loading from '~/components/Loading';
 import { Creators as ChatActions } from '~/store/ducks/chat';
 import { Creators as WSActions } from '~/store/ducks/websocket';
 
-import { Container, WarningMessage } from './styles';
+import { Container, List, WarningMessage } from './styles';
 
 export default function Chats({ navigation }) {
   const dispatch = useDispatch();
@@ -37,7 +35,7 @@ export default function Chats({ navigation }) {
         {chats.loading && <Loading loading={chats.loading} />}
 
         {!chats.loading && chats.data.length > 0 && (
-          <FlatList
+          <List
             data={chats.data}
             keyExtractor={item => item._id}
             renderItem={({ item }) => (
@@ -57,12 +55,7 @@ export default function Chats({ navigation }) {
           <WarningMessage>Você não possui nenhuma conversa.</WarningMessage>
         )}
       </Container>
-      <FloatingAction
-        color="#714cc1"
-        onPressMain={() => navigation.navigate('Search')}
-        overlayColor="rgba(0, 0, 0, 0)"
-        floatingIcon={<MaterialIcons name="search" color="#fff" size={24} />}
-      />
+      <FloatingActionButton onPress={() => navigation.navigate('Search')} />
     </>
   );
 }

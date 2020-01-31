@@ -1,6 +1,8 @@
 import { Header as RNHeader } from 'react-navigation-stack';
 import styled from 'styled-components/native';
 
+import { colors } from '~/config/styles';
+
 export const Container = styled.View`
   flex: 1;
 `;
@@ -9,18 +11,18 @@ export const Header = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  background-color: #714cc1;
+  background-color: ${colors.PRIMARY};
   padding-horizontal: 10;
   height: ${RNHeader.HEIGHT};
 `;
 
 export const Picture = styled.View`
   height: 200;
-  background-color: #666;
+  background-color: ${colors.DARK_CYAN};
 `;
 
 export const Username = styled.Text`
-  color: #fff;
+  color: ${colors.WHITE};
   font-weight: bold;
   font-size: 18;
   margin-top: -35;
@@ -38,12 +40,12 @@ export const Button = styled.TouchableOpacity.attrs({
 })`
   padding-horizontal: 10;
   padding-vertical: 10;
-  background-color: #714cc1;
+  background-color: ${colors.PRIMARY};
   border-radius: 2;
   margin-right: 10;
 `;
 
 export const ButtonText = styled.Text`
-  color: #fff;
+  color: ${colors.WHITE};
   font-size: 18;
 `;

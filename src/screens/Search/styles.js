@@ -1,6 +1,8 @@
 import { Header as RNHeader } from 'react-navigation-stack';
 import styled from 'styled-components/native';
 
+import { colors } from '~/config/styles';
+
 export const Container = styled.View`
   flex: 1;
 `;
@@ -9,10 +11,10 @@ export const Header = styled.View`
   flex-direction: row;
   align-items: center;
   justify-content: flex-start;
-  background-color: #714cc1;
+  background-color: ${colors.PRIMARY};
   padding-horizontal: 10;
   border-bottom-width: 1;
-  border-bottom-color: #ccc;
+  border-bottom-color: ${colors.LIGHT_CYAN};
 `;
 
 export const InputContainer = styled.View`
@@ -23,13 +25,13 @@ export const InputContainer = styled.View`
 `;
 
 export const Input = styled.TextInput.attrs({
-  placeholderTextColor: '#fff',
-  selectionColor: '#fff',
+  placeholderTextColor: colors.WHITE,
+  selectionColor: colors.WHITE,
 })`
   flex: 1;
   padding-vertical: 15;
   padding-horizontal: 10;
-  color: #fff;
+  color: ${colors.WHITE};
   font-size: 15;
   font-weight: bold;
 `;

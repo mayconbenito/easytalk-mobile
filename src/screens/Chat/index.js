@@ -5,10 +5,19 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Loading from '~/components/Loading';
 import Message from '~/components/Message';
+import { colors } from '~/config/styles';
 import api from '~/services/api';
 import { Creators as MessageActions } from '~/store/ducks/message';
 
-import { Container, Header, HeaderDetails, Image, Name, Input } from './styles';
+import {
+  Container,
+  Header,
+  HeaderDetails,
+  Image,
+  Name,
+  InputContainer,
+  Input,
+} from './styles';
 
 function Chat({ navigation }) {
   const dispatch = useDispatch();
@@ -69,7 +78,7 @@ function Chat({ navigation }) {
     <Container>
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" color="#fff" size={24} />
+          <MaterialIcons name="arrow-back" color={colors.WHITE} size={24} />
         </TouchableOpacity>
         <HeaderDetails>
           <Image />
@@ -100,13 +109,18 @@ function Chat({ navigation }) {
         />
       )}
 
-      <Input
-        value={msgInput}
-        onChangeText={txt => setMsgInput(txt)}
-        placeholder="Enviar Mensagem"
-        onSubmitEditing={handleSendMessage}
-        returnKeyType="send"
-      />
+      <InputContainer>
+        <Input
+          value={msgInput}
+          onChangeText={txt => setMsgInput(txt)}
+          placeholder="Enviar Mensagem"
+          onSubmitEditing={handleSendMessage}
+          returnKeyType="send"
+        />
+        <TouchableOpacity onPress={handleSendMessage}>
+          <MaterialIcons name="send" size={24} color={colors.SECONDARY} />
+        </TouchableOpacity>
+      </InputContainer>
     </Container>
   );
 }
