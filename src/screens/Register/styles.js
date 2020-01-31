@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import { colors } from '~/config/styles';
+
 export const Container = styled.View`
   flex: 1;
   align-items: center;
@@ -18,7 +20,7 @@ export const Title = styled.Text`
 export const Input = styled.TextInput`
   margin-vertical: 5;
   border-width: 1;
-  border-color: #000;
+  border-color: ${colors.BLACK};
   padding-left: 10;
 `;
 
@@ -32,12 +34,12 @@ export const Button = styled.TouchableOpacity`
   margin-left: 10;
   padding-horizontal: 15;
   padding-vertical: 10;
-  background-color: #714cc1;
+  background-color: ${colors.PRIMARY};
   border-radius: 2;
 `;
 
 export const ButtonText = styled.Text`
-  color: #fff;
+  color: ${colors.WHITE};
   font-size: 16;
 `;
 
@@ -48,6 +50,6 @@ export const ErrorContainer = styled.View`
 
 export const ErrorMessage = styled.Text`
   font-size: 16;
-  color: #000;
+  color: ${colors.BLACK};
   text-align: center;
 `;

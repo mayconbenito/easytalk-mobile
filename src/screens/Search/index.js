@@ -3,6 +3,7 @@ import { TouchableOpacity } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 
 import UserItem from '~/components/UserItem';
+import { colors } from '~/config/styles';
 import api from '~/services/api';
 
 import { Container, Header, InputContainer, Input, List } from './styles';
@@ -49,18 +50,19 @@ function Search({ navigation }) {
     <Container>
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={30} color="#fff" />
+          <MaterialIcons name="arrow-back" size={30} color={colors.WHITE} />
         </TouchableOpacity>
         <InputContainer>
           <Input
             placeholder="Buscar por usuários"
             autoFocus
+            returnKeyType="search"
             value={query}
             onChangeText={onInputChange}
           />
 
           <TouchableOpacity onPress={clearQuery}>
-            <MaterialIcons name="clear" size={30} color="#fff" />
+            <MaterialIcons name="clear" size={30} color={colors.WHITE} />
           </TouchableOpacity>
         </InputContainer>
       </Header>

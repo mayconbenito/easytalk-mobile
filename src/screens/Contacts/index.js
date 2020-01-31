@@ -1,14 +1,12 @@
 import React, { useEffect } from 'react';
-import { FlatList } from 'react-native';
-import { FloatingAction } from 'react-native-floating-action';
-import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
 
 import ContactItem from '~/components/ContactItem';
+import FloatingActionButton from '~/components/FloatingActionButton';
 import Loading from '~/components/Loading';
 import { Creators as ContactActions } from '~/store/ducks/contact';
 
-import { Container, WarningMessage } from './styles';
+import { Container, List, WarningMessage } from './styles';
 
 export default function Contacts({ navigation }) {
   const dispatch = useDispatch();
@@ -34,7 +32,7 @@ export default function Contacts({ navigation }) {
         {contacts.loading && <Loading loading={contacts.loading} />}
 
         {!contacts.loading && contacts.data.length > 0 && (
-          <FlatList
+          <List
             data={contacts.data}
             keyExtractor={item => item._id}
             renderItem={({ item }) => (
@@ -54,12 +52,7 @@ export default function Contacts({ navigation }) {
           <WarningMessage>Você não possui nenhum contato.</WarningMessage>
         )}
       </Container>
-      <FloatingAction
-        color="#714cc1"
-        onPressMain={() => navigation.navigate('Search')}
-        overlayColor="rgba(0, 0, 0, 0)"
-        floatingIcon={<MaterialIcons name="search" color="#fff" size={24} />}
-      />
+      <FloatingActionButton onPress={() => navigation.navigate('Search')} />
     </>
   );
 }

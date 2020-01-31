@@ -3,6 +3,7 @@ import { createAppContainer, createSwitchNavigator } from 'react-navigation';
 import { createStackNavigator } from 'react-navigation-stack';
 import { createMaterialTopTabNavigator } from 'react-navigation-tabs';
 
+import { colors } from '~/config/styles';
 import AuthHandler from '~/screens/AuthHandler';
 import Chat from '~/screens/Chat';
 import Chats from '~/screens/Chats';
@@ -34,10 +35,10 @@ const HomeStack = createMaterialTopTabNavigator(
     swipeEnabled: true,
     tabBarOptions: {
       style: {
-        backgroundColor: '#714CC1',
+        backgroundColor: colors.PRIMARY,
       },
       indicatorStyle: {
-        borderBottomColor: '#fff',
+        borderBottomColor: colors.WHITE,
         borderBottomWidth: 2,
       },
     },
@@ -49,9 +50,9 @@ const AppStack = createStackNavigator({
     screen: HomeStack,
     navigationOptions: ({ navigation }) => ({
       title: 'EasyTalk',
-      headerTintColor: '#fff',
+      headerTintColor: colors.WHITE,
       headerStyle: {
-        backgroundColor: '#714CC1',
+        backgroundColor: colors.PRIMARY,
         elevation: 0, // remove shadow on Android
         shadowOpacity: 0, // remove shadow on iOS
       },

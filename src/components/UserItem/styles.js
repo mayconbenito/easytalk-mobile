@@ -1,5 +1,7 @@
 import styled from 'styled-components/native';
 
+import { colors } from '~/config/styles';
+
 export const Container = styled.TouchableOpacity.attrs({
   activeOpacity: 0.7,
 })`
@@ -7,14 +9,14 @@ export const Container = styled.TouchableOpacity.attrs({
   padding-horizontal: 10;
   padding-vertical: 5;
   border-bottom-width: 1;
-  border-bottom-color: #ccc;
+  border-bottom-color: ${colors.LIGHT_CYAN};
 `;
 
 export const Image = styled.View`
   width: 60;
   height: 60;
   border-radius: 60;
-  background-color: #ccc;
+  background-color: ${colors.LIGHT_CYAN};
   margin-right: 10;
 `;
 
@@ -26,5 +28,5 @@ export const Details = styled.View`
 export const Title = styled.Text`
   font-size: 18;
   font-weight: bold;
-  color: #000;
+  color: ${colors.BLACK};
 `;
