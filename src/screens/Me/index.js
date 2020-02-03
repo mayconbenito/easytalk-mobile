@@ -11,7 +11,8 @@ import { Creators as SessionActions } from '~/store/ducks/session';
 import {
   Container,
   Header,
-  Picture,
+  ImageContainer,
+  Image,
   Username,
   ButtonsContainer,
   Button,
@@ -50,7 +51,9 @@ function Me({ navigation }) {
 
       {!loading && (
         <>
-          <Picture />
+          <ImageContainer>
+            <Image source={user.picture ? user.picture.url : user.picture} />
+          </ImageContainer>
           <Username>{user && user.name}</Username>
 
           <ButtonsContainer>

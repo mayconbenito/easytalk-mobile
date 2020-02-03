@@ -1,5 +1,6 @@
 import styled from 'styled-components/native';
 
+import UserImage from '~/components/UserImage';
 import { colors } from '~/config/styles';
 
 export const Container = styled.TouchableOpacity.attrs({
@@ -12,7 +13,7 @@ export const Container = styled.TouchableOpacity.attrs({
   border-bottom-color: ${colors.LIGHT_CYAN};
 `;
 
-export const Image = styled.View`
+export const Image = styled(UserImage)`
   width: 60;
   height: 60;
   border-radius: 60;

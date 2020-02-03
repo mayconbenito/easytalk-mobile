@@ -1,6 +1,7 @@
 import { Header as RNHeader } from 'react-navigation-stack';
 import styled from 'styled-components/native';
 
+import UserImage from '~/components/UserImage';
 import { colors } from '~/config/styles';
 
 export const Container = styled.View`
@@ -25,7 +26,7 @@ export const HeaderDetails = styled.View`
   margin-left: 5;
 `;
 
-export const Image = styled.View`
+export const Image = styled(UserImage)`
   width: 40;
   height: 40;
   border-radius: 40;
