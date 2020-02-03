@@ -7,7 +7,7 @@ export default function ChatItem({ data, onPress }) {
     <Container onPress={onPress}>
       <Image />
       <Details>
-        <Title>{data.sender.name}</Title>
+        <Title>{data.user.name}</Title>
         <Description>{data.lastSentMessage}</Description>
       </Details>
     </Container>
