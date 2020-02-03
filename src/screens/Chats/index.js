@@ -42,7 +42,7 @@ export default function Chats({ navigation }) {
               <ChatItem
                 data={item}
                 onPress={() =>
-                  navigation.navigate('Chat', { chat: item, user: item.sender })
+                  navigation.navigate('Chat', { chat: item, user: item.user })
                 }
               />
             )}
