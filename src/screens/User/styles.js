@@ -1,6 +1,7 @@
 import { Header as RNHeader } from 'react-navigation-stack';
 import styled from 'styled-components/native';
 
+import UserImage from '~/components/UserImage';
 import { colors } from '~/config/styles';
 
 export const Container = styled.View`
@@ -16,9 +17,16 @@ export const Header = styled.View`
   height: ${RNHeader.HEIGHT};
 `;
 
-export const Picture = styled.View`
+export const ImageContainer = styled.View`
   height: 200;
   background-color: ${colors.DARK_CYAN};
+  justify-content: center;
+  align-items: center;
+`;
+
+export const Image = styled(UserImage)`
+  width: 200;
+  height: 200;
 `;
 
 export const Username = styled.Text`

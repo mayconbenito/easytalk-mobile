@@ -11,7 +11,8 @@ import { Creators as ContactActions } from '~/store/ducks/contact';
 import {
   Container,
   Header,
-  Picture,
+  ImageContainer,
+  Image,
   Username,
   ButtonsContainer,
   Button,
@@ -79,7 +80,9 @@ function User({ navigation }) {
 
       {!loading && (
         <>
-          <Picture />
+          <ImageContainer>
+            <Image source={user.picture ? user.picture.url : user.picture} />
+          </ImageContainer>
           <Username>{user && user.name}</Username>
 
           <ButtonsContainer>

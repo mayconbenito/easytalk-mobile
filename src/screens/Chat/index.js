@@ -81,7 +81,13 @@ function Chat({ navigation }) {
           <MaterialIcons name="arrow-back" color={colors.WHITE} size={24} />
         </TouchableOpacity>
         <HeaderDetails>
-          <Image />
+          <Image
+            source={
+              navigationState.user.picture
+                ? navigationState.user.picture.url
+                : navigationState.user.picture
+            }
+          />
           <Name>{navigationState.user.name}</Name>
         </HeaderDetails>
       </Header>
