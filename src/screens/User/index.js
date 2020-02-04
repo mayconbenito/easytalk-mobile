@@ -10,7 +10,7 @@ import { Creators as ContactActions } from '~/store/ducks/contact';
 
 import {
   Container,
-  Header,
+  Profile,
   ImageContainer,
   Image,
   Username,
@@ -70,20 +70,16 @@ function User({ navigation }) {
 
   return (
     <Container>
-      <Header>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={30} color={colors.WHITE} />
-        </TouchableOpacity>
-      </Header>
-
       {loading && <Loading />}
 
       {!loading && (
         <>
-          <ImageContainer>
-            <Image source={user.picture ? user.picture.url : user.picture} />
-          </ImageContainer>
-          <Username>{user && user.name}</Username>
+          <Profile>
+            <ImageContainer>
+              <Image source={user.picture ? user.picture.url : user.picture} />
+            </ImageContainer>
+            <Username>{user && user.name}</Username>
+          </Profile>
 
           <ButtonsContainer>
             {user && user.isContact ? (
@@ -106,8 +102,18 @@ function User({ navigation }) {
   );
 }
 
-User.navigationOptions = () => ({
-  header: null,
+User.navigationOptions = ({ navigation }) => ({
+  headerStyle: {
+    backgroundColor: colors.PRIMARY,
+  },
+  headerLeft: (
+    <TouchableOpacity
+      style={{ marginLeft: 10 }}
+      onPress={() => navigation.goBack()}
+    >
+      <MaterialIcons name="arrow-back" size={30} color={colors.WHITE} />
+    </TouchableOpacity>
+  ),
 });
 
 export default User;
