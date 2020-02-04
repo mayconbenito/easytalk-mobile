@@ -30,6 +30,9 @@
     "prettier",
     "eslint-plugin-import-helpers"
   ],
+  "globals": {
+    "FormData": "writable"
+  },
   "rules": {
     "prettier/prettier": "error",
     "react/jsx-filename-extension": [
