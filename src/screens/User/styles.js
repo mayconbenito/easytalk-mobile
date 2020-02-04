@@ -1,4 +1,3 @@
-import { Header as RNHeader } from 'react-navigation-stack';
 import styled from 'styled-components/native';
 
 import UserImage from '~/components/UserImage';
@@ -6,35 +5,35 @@ import { colors } from '~/config/styles';
 
 export const Container = styled.View`
   flex: 1;
+  flex-direction: column;
+  justify-content: space-between;
+  padding-vertical: 30;
 `;
 
-export const Header = styled.View`
-  flex-direction: row;
-  align-items: center;
-  justify-content: flex-start;
-  background-color: ${colors.PRIMARY};
-  padding-horizontal: 10;
-  height: ${RNHeader.HEIGHT};
-`;
+export const Profile = styled.View``;
 
 export const ImageContainer = styled.View`
-  height: 200;
-  background-color: ${colors.DARK_CYAN};
+  width: 180;
+  height: 180;
+  border-radius: 180;
+  align-self: center;
+  background-color: ${colors.LIGHT_CYAN};
   justify-content: center;
   align-items: center;
 `;
 
 export const Image = styled(UserImage)`
-  width: 200;
-  height: 200;
+  width: 180;
+  height: 180;
+  border-radius: 180;
 `;
 
 export const Username = styled.Text`
-  color: ${colors.WHITE};
+  color: ${colors.BLACK};
   font-weight: bold;
-  font-size: 18;
-  margin-top: -35;
-  margin-left: 10;
+  font-size: 21;
+  margin-top: 10;
+  align-self: center;
 `;
 
 export const ButtonsContainer = styled.View`

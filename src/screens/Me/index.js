@@ -11,16 +11,15 @@ import { Creators as SessionActions } from '~/store/ducks/session';
 
 import {
   Container,
-  Header,
+  Profile,
   ImageContainer,
   Image,
   Username,
-  ButtonsContainer,
   Button,
   ButtonText,
 } from './styles';
 
-function Me({ navigation }) {
+function Me() {
   const dispatch = useDispatch();
   const [user, setUser] = useState();
   const [loading, setLoading] = useState(true);
@@ -87,37 +86,38 @@ function Me({ navigation }) {
 
   return (
     <Container>
-      <Header>
-        <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" size={30} color={colors.WHITE} />
-        </TouchableOpacity>
-      </Header>
-
       {loading && <Loading />}
 
       {!loading && (
         <>
-          <ImageContainer>
-            <Image source={user.picture ? user.picture.url : user.picture} />
-          </ImageContainer>
-          <Username>{user && user.name}</Username>
+          <Profile>
+            <ImageContainer onPress={openImageLibrary}>
+              <Image source={user.picture ? user.picture.url : user.picture} />
+            </ImageContainer>
+            <Username>{user && user.name}</Username>
+          </Profile>
 
-          <ButtonsContainer>
-            <Button onPress={() => dispatch(SessionActions.deleteSession())}>
-              <ButtonText>Deslogar do App</ButtonText>
-            </Button>
-            <Button onPress={openImageLibrary}>
-              <ButtonText>Alterar foto de perfil</ButtonText>
-            </Button>
-          </ButtonsContainer>
+          <Button onPress={() => dispatch(SessionActions.deleteSession())}>
+            <ButtonText>Sair do App</ButtonText>
+          </Button>
         </>
       )}
     </Container>
   );
 }
 
-Me.navigationOptions = () => ({
-  header: null,
+Me.navigationOptions = ({ navigation }) => ({
+  headerStyle: {
+    backgroundColor: colors.PRIMARY,
+  },
+  headerLeft: (
+    <TouchableOpacity
+      style={{ marginLeft: 10 }}
+      onPress={() => navigation.goBack()}
+    >
+      <MaterialIcons name="arrow-back" size={30} color={colors.WHITE} />
+    </TouchableOpacity>
+  ),
 });
 
 export default Me;
