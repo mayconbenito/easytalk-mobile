@@ -57,9 +57,7 @@ const successRefresh = (state = initialState, action) => {
   };
 };
 
-const clearState = () => {
-  return initialState;
-};
+const clearState = () => initialState;
 
 export default createReducer(initialState, {
   [Types.FETCH_CONTACTS]: fetchContacts,

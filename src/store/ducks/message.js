@@ -101,9 +101,7 @@ const addMessageToChat = (state = initialState, action) => {
   };
 };
 
-const clearState = () => {
-  return initialState;
-};
+const clearState = () => initialState;
 
 export default createReducer(initialState, {
   [Types.FETCH_MESSAGES]: fetchMessages,
