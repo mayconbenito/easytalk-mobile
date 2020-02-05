@@ -1,3 +1,4 @@
+import NetInfo from '@react-native-community/netinfo';
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, FlatList } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -5,6 +6,7 @@ import { useDispatch, useSelector } from 'react-redux';
 
 import Loading from '~/components/Loading';
 import Message from '~/components/Message';
+import NetworkWarning from '~/components/NetworkWarning';
 import { colors } from '~/config/styles';
 import api from '~/services/api';
 import { Creators as MessageActions } from '~/store/ducks/message';
@@ -25,10 +27,21 @@ function Chat({ navigation }) {
 
   const [msgInput, setMsgInput] = useState('');
   const [chatId, setChatId] = useState(false);
+  const [netState, setNetState] = useState(null);
 
   const navigationState = navigation.state.params;
 
   const message = useSelector(state => state.message);
+
+  function subscribeToNetState() {
+    NetInfo.addEventListener(state => {
+      if (state.isConnected) {
+        setNetState('online');
+      } else {
+        setNetState('offline');
+      }
+    });
+  }
 
   useEffect(() => {
     async function checkChatId() {
@@ -48,6 +61,7 @@ function Chat({ navigation }) {
     }
 
     checkChatId();
+    subscribeToNetState();
   }, []);
 
   const [messagesList = []] = useSelector(
@@ -64,8 +78,10 @@ function Chat({ navigation }) {
   }, [chatId]);
 
   function handleSendMessage() {
-    dispatch(MessageActions.sendMessage(chatId, msgInput));
-    setMsgInput('');
+    if (netState === 'online') {
+      dispatch(MessageActions.sendMessage(chatId, msgInput));
+      setMsgInput('');
+    }
   }
 
   function endReached() {
@@ -92,11 +108,16 @@ function Chat({ navigation }) {
         </HeaderDetails>
       </Header>
 
+      {netState === 'offline' && <NetworkWarning />}
+
       {message.loading && message.page === 1 ? (
         <Loading loading={message.loading} />
       ) : (
         <FlatList
-          style={{ padding: 10 }}
+          style={{
+            marginTop: netState === 'offline' ? 25 : 0,
+          }}
+          contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 10 }}
           inverted
           data={messagesList.messages}
           onEndReached={endReached}
