@@ -1,9 +1,10 @@
 import React, { useEffect } from 'react';
-import { YellowBox, Alert } from 'react-native';
+import { YellowBox, Alert, StatusBar } from 'react-native';
 import { Provider } from 'react-redux';
 import { PersistGate } from 'redux-persist/integration/react';
 import * as UpdateAPK from 'rn-update-apk';
 
+import { colors } from './config/styles';
 import Routes from './routes';
 import NavigationService from './services/navigation';
 import { store, persistor } from './store';
@@ -41,6 +42,7 @@ export default function() {
   return (
     <Provider store={store}>
       <PersistGate loading={null} persistor={persistor}>
+        <StatusBar backgroundColor={colors.PRIMARY} barStyle="light-content" />
         <Routes
           ref={navigatorRef => {
             NavigationService.setTopLevelNavigator(navigatorRef);
