@@ -6,6 +6,9 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
+    "release:android": "cd android && ./gradlew bundleRelease",
+    "build:android": "react-native run-android --variant release",
+    "clean-gradlew": "cd android && ./gradlew clean",
     "test": "jest",
     "lint": "eslint ."
   },
@@ -16,6 +19,7 @@
     "expo-image-picker": "^8.0.2",
     "react": "16.9.0",
     "react-native": "0.61.5",
+    "react-native-dotenv": "^0.2.0",
     "react-native-floating-action": "^1.19.1",
     "react-native-fs": "^2.16.4",
     "react-native-gesture-handler": "^1.5.2",
