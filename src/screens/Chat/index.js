@@ -94,7 +94,7 @@ function Chat({ navigation }) {
     <Container>
       <Header>
         <TouchableOpacity onPress={() => navigation.goBack()}>
-          <MaterialIcons name="arrow-back" color={colors.WHITE} size={24} />
+          <MaterialIcons name="arrow-back" color={colors.WHITE} size={30} />
         </TouchableOpacity>
         <HeaderDetails>
           <Image
