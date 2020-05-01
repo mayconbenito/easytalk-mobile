@@ -86,7 +86,7 @@ function Me() {
 
   return (
     <Container>
-      {loading && <Loading />}
+      {loading && <Loading loading />}
 
       {!loading && (
         <>
