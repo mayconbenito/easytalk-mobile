@@ -120,9 +120,25 @@ function Chat({ navigation }) {
               loading={message.loading}
             />
           }
-          renderItem={({ item }) => (
-            <Message message={item.data} mine={item.senderId === session._id} />
-          )}
+          renderItem={({ item }) => {
+            if (item._id === messagesList.messages[0]._id) {
+              return (
+                <Message
+                  data={item}
+                  last
+                  mine={item.senderId === session._id}
+                />
+              );
+            }
+
+            return (
+              <Message
+                data={item}
+                last={false}
+                mine={item.senderId === session._id}
+              />
+            );
+          }}
         />
       )}
 
