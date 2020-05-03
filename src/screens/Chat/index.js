@@ -1,4 +1,4 @@
-import NetInfo from '@react-native-community/netinfo';
+import { useNetInfo } from '@react-native-community/netinfo';
 import React, { useEffect, useState } from 'react';
 import { TouchableOpacity, FlatList } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
@@ -25,23 +25,14 @@ function Chat({ navigation }) {
   const dispatch = useDispatch();
   const session = useSelector(state => state.session);
 
+  const netInfo = useNetInfo();
+
   const [msgInput, setMsgInput] = useState('');
   const [chatId, setChatId] = useState(false);
-  const [netState, setNetState] = useState(null);
 
   const navigationState = navigation.state.params;
 
   const message = useSelector(state => state.message);
-
-  function subscribeToNetState() {
-    NetInfo.addEventListener(state => {
-      if (state.isConnected) {
-        setNetState('online');
-      } else {
-        setNetState('offline');
-      }
-    });
-  }
 
   useEffect(() => {
     async function checkChatId() {
@@ -61,7 +52,6 @@ function Chat({ navigation }) {
     }
 
     checkChatId();
-    subscribeToNetState();
   }, []);
 
   const [messagesList = []] = useSelector(
@@ -78,7 +68,7 @@ function Chat({ navigation }) {
   }, [chatId]);
 
   function handleSendMessage() {
-    if (netState === 'online') {
+    if (netInfo.isConnected) {
       dispatch(MessageActions.sendMessage(chatId, msgInput));
       setMsgInput('');
     }
@@ -108,14 +98,14 @@ function Chat({ navigation }) {
         </HeaderDetails>
       </Header>
 
-      {netState === 'offline' && <NetworkWarning />}
+      {!netInfo.isConnected && <NetworkWarning />}
 
       {message.loading && message.page === 1 ? (
         <Loading loading={message.loading} />
       ) : (
         <FlatList
           style={{
-            marginTop: netState === 'offline' ? 25 : 0,
+            marginTop: !netInfo.isConnected ? 25 : 0,
           }}
           contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 10 }}
           inverted
