@@ -70,7 +70,7 @@ function User({ navigation }) {
 
   return (
     <Container>
-      {loading && <Loading />}
+      {loading && <Loading loading />}
 
       {!loading && (
         <>
