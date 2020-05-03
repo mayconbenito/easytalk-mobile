@@ -22,6 +22,7 @@ export const Image = styled(UserImage)`
 `;
 
 export const Details = styled.View`
+  flex: 1;
   flex-direction: column;
   justify-content: center;
 `;
@@ -32,7 +33,10 @@ export const Title = styled.Text`
   color: ${colors.BLACK};
 `;
 
-export const Description = styled.Text`
+export const Description = styled.Text.attrs({
+  numberOfLines: 1,
+  ellipsizeMode: 'tail',
+})`
   font-size: 16;
   color: ${colors.CYAN};
 `;
