@@ -9,7 +9,7 @@ export default function Loading({ style, loading, size = 40 }) {
       <View style={{ ...style, flex: 1, justifyContent: 'center' }}>
         <ActivityIndicator
           size={size}
-          color={colors.DARK_CYAN}
+          color={colors.PRIMARY}
           animating={loading}
         />
       </View>
