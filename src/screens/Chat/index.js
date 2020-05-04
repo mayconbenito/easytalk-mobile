@@ -1,5 +1,5 @@
 import { useNetInfo } from '@react-native-community/netinfo';
-import React, { useEffect, useState } from 'react';
+import React, { useEffect, useState, useRef } from 'react';
 import { TouchableOpacity, FlatList } from 'react-native';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 import { useDispatch, useSelector } from 'react-redux';
@@ -29,6 +29,8 @@ function Chat({ navigation }) {
 
   const [msgInput, setMsgInput] = useState('');
   const [chatId, setChatId] = useState(false);
+
+  const messagesListRef = useRef();
 
   const navigationState = navigation.state.params;
 
@@ -72,6 +74,10 @@ function Chat({ navigation }) {
       const messageTxt = msgInput;
       setMsgInput('');
       dispatch(MessageActions.sendMessage(chatId, messageTxt));
+      messagesListRef.current.scrollToOffset({
+        offset: 0,
+        animated: true,
+      });
     }
   }
 
@@ -108,6 +114,7 @@ function Chat({ navigation }) {
           style={{
             marginTop: !netInfo.isConnected ? 25 : 0,
           }}
+          ref={messagesListRef}
           contentContainerStyle={{ paddingVertical: 10, paddingHorizontal: 10 }}
           inverted
           data={messagesList.messages}
