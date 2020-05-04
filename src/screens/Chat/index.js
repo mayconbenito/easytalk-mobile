@@ -69,8 +69,9 @@ function Chat({ navigation }) {
 
   function handleSendMessage() {
     if (netInfo.isConnected) {
-      dispatch(MessageActions.sendMessage(chatId, msgInput));
+      const messageTxt = msgInput;
       setMsgInput('');
+      dispatch(MessageActions.sendMessage(chatId, messageTxt));
     }
   }
 
