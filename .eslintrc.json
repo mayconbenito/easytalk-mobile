@@ -68,7 +68,9 @@
     "no-param-reassign": "off",
     "no-underscore-dangle": "off",
     "import/no-named-as-default-member": "off",
-    "import/no-cycle": "off"
+    "import/no-cycle": "off",
+    "no-bitwise": "off",
+    "array-callback-return": "off"
   },
   "settings": {
     "import/resolver": {
