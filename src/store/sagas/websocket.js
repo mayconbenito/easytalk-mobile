@@ -1,3 +1,4 @@
+import { WS_URL } from 'react-native-dotenv';
 import { eventChannel } from 'redux-saga';
 import {
   takeLatest,
@@ -52,7 +53,7 @@ export function* watchEvents(channel) {
 export function* handelWsConnection() {
   try {
     const session = yield select(state => state.session);
-    const websocket = io('ws://192.168.15.30:3000', {
+    const websocket = io(WS_URL, {
       query: {
         token: session.wsToken,
       },
