@@ -11,7 +11,8 @@ import {
 function* sendMessage({ chatId, message }) {
   try {
     const response = yield call(api.post, `/chats/${chatId}/messages`, {
-      message,
+      _id: message._id,
+      message: message.data,
     });
 
     yield all([
@@ -22,9 +23,12 @@ function* sendMessage({ chatId, message }) {
         )
       ),
       put(ChatActions.addChatItemToList(response.data.chat)),
-      put(ChatActions.updateChatLastSentMessage(response.data.chat, message)),
+      put(
+        ChatActions.updateChatLastSentMessage(response.data.chat, message.data)
+      ),
     ]);
   } catch (err) {
+    yield put(MessageActions.removeMessageFromChat(chatId, message._id));
     console.log(err);
   }
 }

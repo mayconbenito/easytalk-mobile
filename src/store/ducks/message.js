@@ -7,6 +7,7 @@ export const { Types, Creators } = createActions(
     sendMessage: ['chatId', 'message'],
     successSendMessage: ['chat', 'message'],
     addMessageToChat: ['chat', 'message'],
+    removeMessageFromChat: ['chatId', 'messageId'],
     clearState: [],
   },
   {
@@ -54,7 +55,23 @@ const successFetchMessages = (state = initialState, action) => {
   };
 };
 
-const sendMessage = (state = initialState) => state;
+const sendMessage = (state = initialState, action) => {
+  if (state.chats.find(chat => chat._id === action.chatId)) {
+    return {
+      ...state,
+      total: state.total + 1,
+      chats: state.chats.map(chat => {
+        if (chat._id === action.chatId) {
+          return { ...chat, messages: [action.message, ...chat.messages] };
+        }
+
+        return chat;
+      }),
+    };
+  }
+
+  return state;
+};
 
 const successSendMessage = (state = initialState, action) => {
   if (state.chats.find(chat => chat._id === action.chat._id)) {
@@ -63,7 +80,16 @@ const successSendMessage = (state = initialState, action) => {
       total: state.total + 1,
       chats: state.chats.map(chat => {
         if (chat._id === action.chat._id) {
-          return { ...chat, messages: [action.message, ...chat.messages] };
+          return {
+            ...chat,
+            messages: chat.messages.map(message => {
+              if (message._id === action.message._id) {
+                return action.message;
+              }
+
+              return message;
+            }),
+          };
         }
 
         return chat;
@@ -101,6 +127,29 @@ const addMessageToChat = (state = initialState, action) => {
   };
 };
 
+const removeMessageFromChat = (state = initialState, action) => {
+  if (state.chats.find(chat => chat._id === action.chatId)) {
+    return {
+      ...state,
+      total: state.total - 1,
+      chats: state.chats.map(chat => {
+        if (chat._id === action.chatId) {
+          return {
+            ...chat,
+            messages: chat.messages.filter(message => {
+              if (message._id !== action.messageId) {
+                return message;
+              }
+            }),
+          };
+        }
+
+        return chat;
+      }),
+    };
+  }
+};
+
 const clearState = () => initialState;
 
 export default createReducer(initialState, {
@@ -109,5 +158,6 @@ export default createReducer(initialState, {
   [Types.SEND_MESSAGE]: sendMessage,
   [Types.SUCCESS_SEND_MESSAGE]: successSendMessage,
   [Types.ADD_MESSAGE_TO_CHAT]: addMessageToChat,
+  [Types.REMOVE_MESSAGE_FROM_CHAT]: removeMessageFromChat,
   [Types.CLEAR_STATE]: clearState,
 });

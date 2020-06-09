@@ -8,6 +8,8 @@ import Loading from '~/components/Loading';
 import Message from '~/components/Message';
 import NetworkWarning from '~/components/NetworkWarning';
 import { colors } from '~/config/styles';
+import isStringEmpty from '~/helpers/isStringEmpty';
+import objectId from '~/helpers/objectId';
 import api from '~/services/api';
 import { Creators as MessageActions } from '~/store/ducks/message';
 
@@ -71,13 +73,22 @@ function Chat({ navigation }) {
 
   function handleSendMessage() {
     if (netInfo.isConnected) {
-      const messageTxt = msgInput;
-      setMsgInput('');
-      dispatch(MessageActions.sendMessage(chatId, messageTxt));
-      messagesListRef.current.scrollToOffset({
-        offset: 0,
-        animated: true,
-      });
+      if (isStringEmpty(msgInput)) {
+        const messageObj = {
+          _id: objectId(),
+          data: msgInput,
+          senderId: session._id,
+          reciverId: navigationState.user._id,
+          createdAt: new Date().toISOString(),
+        };
+
+        setMsgInput('');
+        dispatch(MessageActions.sendMessage(chatId, messageObj));
+        messagesListRef.current.scrollToOffset({
+          offset: 0,
+          animated: true,
+        });
+      }
     }
   }
 
