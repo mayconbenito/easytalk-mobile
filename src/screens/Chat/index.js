@@ -71,6 +71,13 @@ function Chat({ navigation }) {
     };
   }, [chatId]);
 
+  useEffect(() => {
+    if (chatId && netInfo.isConnected) {
+      dispatch(MessageActions.clearState());
+      dispatch(MessageActions.fetchMessages(chatId, 1));
+    }
+  }, [netInfo.isConnected]);
+
   function handleSendMessage() {
     if (netInfo.isConnected) {
       if (isStringEmpty(msgInput)) {
@@ -96,7 +103,8 @@ function Chat({ navigation }) {
 
   function endReached() {
     if (!message.loading && message.total > messagesList.messages.length) {
-      dispatch(MessageActions.fetchMessages(chatId, message.page));
+      if (netInfo.isConnected)
+        dispatch(MessageActions.fetchMessages(chatId, message.page));
     }
   }
 
