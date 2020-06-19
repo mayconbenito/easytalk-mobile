@@ -57,6 +57,7 @@ export function* handelWsConnection() {
       query: {
         token: session.wsToken,
       },
+      transports: ['websocket'],
     });
 
     const channel = yield call(getWsChannel, websocket);
