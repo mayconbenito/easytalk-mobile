@@ -39,7 +39,6 @@ export default function() {
       },
       onError: err => {
         console.log(err);
-        Alert.alert('Erro ao instalar a atualização');
       },
     });
 

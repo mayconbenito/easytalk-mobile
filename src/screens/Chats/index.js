@@ -1,3 +1,4 @@
+import { useNetInfo } from '@react-native-community/netinfo';
 import React, { useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
@@ -11,10 +12,18 @@ import { Container, List, WarningMessage } from './styles';
 export default function Chats({ navigation }) {
   const dispatch = useDispatch();
   const chats = useSelector(state => state.chat);
+  const netInfo = useNetInfo();
 
   useEffect(() => {
     dispatch(ChatActions.fetchChats());
   }, []);
+
+  useEffect(() => {
+    if (netInfo.isConnected) {
+      dispatch(ChatActions.clearState());
+      dispatch(ChatActions.fetchChats());
+    }
+  }, [netInfo.isConnected]);
 
   function refresh() {
     dispatch(ChatActions.fetchChats());
