@@ -1,5 +1,7 @@
 function isStringEmpty(str) {
-  return str.length > 0 && /[^\s]/.test(str);
+  const isEmpty = str.length > 0 && /[^\s]/.test(str);
+
+  return !isEmpty;
 }
 
 export default isStringEmpty;
