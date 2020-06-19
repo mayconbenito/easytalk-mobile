@@ -9,7 +9,8 @@ import {
   Title,
   Input,
   NavigationContainer,
-  Button,
+  LoginButton,
+  RegisterButton,
   ButtonText,
   ErrorContainer,
   ErrorMessage,
@@ -47,13 +48,14 @@ function Login({ navigation }) {
           onSubmitEditing={handleSubmit}
         />
 
+        <LoginButton onPress={handleSubmit}>
+          <ButtonText>Entrar</ButtonText>
+        </LoginButton>
+
         <NavigationContainer>
-          <Button onPress={() => navigation.navigate('Register')}>
+          <RegisterButton onPress={() => navigation.navigate('Register')}>
             <ButtonText>Criar Conta</ButtonText>
-          </Button>
-          <Button onPress={handleSubmit}>
-            <ButtonText>Entrar</ButtonText>
-          </Button>
+          </RegisterButton>
         </NavigationContainer>
 
         <ErrorContainer>

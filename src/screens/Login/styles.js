@@ -14,14 +14,39 @@ export const Form = styled.View`
 `;
 
 export const Title = styled.Text`
-  font-size: 34;
+  font-size: 40;
+  font-weight: 100;
+  color: ${colors.PRIMARY};
+  margin-bottom: 3;
+  border-radius: 3;
 `;
 
-export const Input = styled.TextInput`
+export const Input = styled.TextInput.attrs({
+  placeholderTextColor: colors.BLACK,
+})`
   margin-vertical: 5;
-  border-width: 1;
-  border-color: ${colors.BLACK};
+  height: 45;
   padding-left: 10;
+  border-radius: 3;
+  shadow-opacity: 1;
+  shadow-radius: 15;
+  elevation: 1;
+`;
+
+export const ButtonText = styled.Text`
+  color: ${colors.WHITE};
+  font-size: 16;
+  font-weight: bold;
+`;
+
+export const LoginButton = styled.TouchableOpacity`
+  padding-horizontal: 15;
+  margin-vertical: 5;
+  height: 45;
+  border-radius: 3;
+  align-items: center;
+  justify-content: center;
+  background-color: ${colors.PRIMARY};
 `;
 
 export const NavigationContainer = styled.View`
@@ -30,17 +55,13 @@ export const NavigationContainer = styled.View`
   margin-top: 10;
 `;
 
-export const Button = styled.TouchableOpacity`
-  margin-left: 10;
+export const RegisterButton = styled.TouchableOpacity`
   padding-horizontal: 15;
-  padding-vertical: 10;
-  background-color: ${colors.PRIMARY};
-  border-radius: 2;
-`;
-
-export const ButtonText = styled.Text`
-  color: ${colors.WHITE};
-  font-size: 16;
+  height: 45;
+  border-radius: 3;
+  align-items: center;
+  justify-content: center;
+  background-color: ${colors.SECONDARY};
 `;
 
 export const ErrorContainer = styled.View`
