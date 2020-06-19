@@ -21,7 +21,9 @@ export default function() {
     if (session) {
       dispatch(WSActions.wsConnect());
     }
+  }, [session]);
 
+  useEffect(() => {
     const updater = new UpdateAPK.UpdateAPK({
       apkVersionUrl: updaterURL,
       fileProviderAuthority: 'com.mayconbenito.easytalk.provider',
