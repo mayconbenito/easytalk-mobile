@@ -80,7 +80,7 @@ function Chat({ navigation }) {
 
   function handleSendMessage() {
     if (netInfo.isConnected) {
-      if (isStringEmpty(msgInput)) {
+      if (!isStringEmpty(msgInput)) {
         const messageObj = {
           // Generate fake object id to indentify message on the client side
           _id: objectId(),
