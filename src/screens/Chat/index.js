@@ -75,10 +75,12 @@ function Chat({ navigation }) {
     if (netInfo.isConnected) {
       if (isStringEmpty(msgInput)) {
         const messageObj = {
+          // Generate fake object id to indentify message on the client side
           _id: objectId(),
           data: msgInput,
           senderId: session._id,
           reciverId: navigationState.user._id,
+          // Fake date to show on the client side
           createdAt: new Date().toISOString(),
         };
 
