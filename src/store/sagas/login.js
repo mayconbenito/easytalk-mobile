@@ -24,15 +24,11 @@ export function* requestLogin({ data }) {
     navigation.navigate('AppStack');
   } catch (err) {
     if (err.response.status === 400) {
-      yield put(
-        LoginActions.failureLogin(
-          'Formato de nome de usuário, e-mail ou senha invalido'
-        )
-      );
+      yield put(LoginActions.failureLogin('E-mail ou senha invalidos'));
     }
 
     if (err.response.status === 401) {
-      yield put(LoginActions.failureLogin('Email ou senha incorretos'));
+      yield put(LoginActions.failureLogin('E-mail ou senha incorretos'));
     }
 
     if (err.response.status === 500) {

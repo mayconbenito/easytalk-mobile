@@ -30,7 +30,7 @@ export function* requestRegister({ data }) {
     if (err.response.status === 400) {
       yield put(
         RegisterActions.failureRegister(
-          'Formato de nome de usuário, e-mail ou senha invalido'
+          'Nome de usuário, e-mail ou senha invalido'
         )
       );
     }
