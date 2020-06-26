@@ -93,10 +93,12 @@ function Chat({ navigation }) {
 
         setMsgInput('');
         dispatch(MessageActions.sendMessage(chatId, messageObj));
-        messagesListRef.current.scrollToOffset({
-          offset: 0,
-          animated: true,
-        });
+        if (messagesListRef && messagesListRef.current) {
+          messagesListRef.current.scrollToOffset({
+            offset: 0,
+            animated: true,
+          });
+        }
       }
     }
   }
