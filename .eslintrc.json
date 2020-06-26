@@ -13,7 +13,8 @@
   "globals": {
     "Atomics": "readonly",
     "SharedArrayBuffer": "readonly",
-    "__DEV__": true
+    "__DEV__": true,
+    "FormData": "writable"
   },
   "parserOptions": {
     "ecmaFeatures": {
@@ -30,15 +31,15 @@
     "prettier",
     "eslint-plugin-import-helpers"
   ],
-  "globals": {
-    "FormData": "writable"
-  },
   "rules": {
     "prettier/prettier": "error",
     "react/jsx-filename-extension": [
       "error",
       {
-        "extensions": [".js", ".jsx"]
+        "extensions": [
+          ".js",
+          ".jsx"
+        ]
       }
     ],
     "import/prefer-default-export": "off",
@@ -47,7 +48,17 @@
       "warn",
       {
         "newlinesBetween": "always",
-        "groups": [["module"], "/^~/", ["parent", "sibling", "index"]],
+        "groups": [
+          [
+            "module"
+          ],
+          "/^~/",
+          [
+            "parent",
+            "sibling",
+            "index"
+          ]
+        ],
         "alphabetize": {
           "order": "asc",
           "ignoreCase": true
