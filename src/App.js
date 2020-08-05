@@ -3,6 +3,7 @@ import { YellowBox, Alert, StatusBar } from 'react-native';
 import { useSelector, useDispatch } from 'react-redux';
 import * as UpdateAPK from 'rn-update-apk';
 
+import env from '~/config/env';
 import { Creators as WSActions } from '~/store/ducks/websocket';
 
 import { colors } from './config/styles';
@@ -15,7 +16,7 @@ export default function() {
   const dispatch = useDispatch();
   const session = useSelector(state => state.session);
 
-  const updaterURL = 'http://android-app-update.easytalk.ml';
+  const updaterURL = env.UPDATER_URL;
 
   useEffect(() => {
     if (session) {
@@ -28,7 +29,7 @@ export default function() {
       apkVersionUrl: updaterURL,
       fileProviderAuthority: 'com.mayconbenito.easytalk.provider',
       needUpdateApp: needUpdate => {
-        Alert.alert('Nova Atualização disponivel', '', [
+        Alert.alert('Nova Atualização disponível', '', [
           { text: 'Cancelar', onPress: () => {} },
           {
             text: 'Atualizar',
@@ -37,7 +38,7 @@ export default function() {
         ]);
       },
       forceUpdateApp: async () => {
-        Alert.alert('Download de atualização obrigátoria iniciado');
+        Alert.alert('Download de atualização obrigatória iniciado');
       },
       onError: err => {
         console.log(err);
