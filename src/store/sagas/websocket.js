@@ -1,4 +1,3 @@
-import { WS_URL } from 'react-native-dotenv';
 import { eventChannel } from 'redux-saga';
 import {
   takeLatest,
@@ -11,6 +10,7 @@ import {
 } from 'redux-saga/effects';
 import io from 'socket.io-client';
 
+import env from '~/config/env';
 import { Types as WSTypes } from '~/store/ducks/websocket';
 
 import { Creators as ChatActions } from '../ducks/chat';
@@ -53,7 +53,7 @@ export function* watchEvents(channel) {
 export function* handelWsConnection() {
   try {
     const session = yield select(state => state.session);
-    const websocket = io(WS_URL, {
+    const websocket = io(env.WS_URL, {
       query: {
         token: session.wsToken,
       },

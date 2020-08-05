@@ -1,4 +1,9 @@
 {
   "name": "easytalk",
-  "displayName": "EasyTalk"
+  "displayName": "EasyTalk",
+  "expo": {
+    "name": "EasyTalk",
+    "slug": "easytalk",
+    "sdkVersion": "38.0.0"
+  }
 }
