@@ -6,9 +6,10 @@
     "android": "react-native run-android",
     "ios": "react-native run-ios",
     "start": "react-native start",
-    "release:android": "cd android && ./gradlew bundleRelease",
-    "build:android": "react-native run-android --variant release",
-    "clean-gradlew": "cd android && ./gradlew clean",
+    "android:bundle": "cd android && ./gradlew bundleRelease",
+    "android:apk": "cd android && cd android && ./gradlew bundleRelease",
+    "android:build": "react-native run-android --variant release",
+    "android:clean-gradlew": "cd android && ./gradlew clean",
     "test": "jest",
     "lint": "eslint ."
   },
