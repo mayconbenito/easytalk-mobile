@@ -24,7 +24,7 @@ function Main() {
         console.log(err);
       }
     }
-    if (__DEV__) {
+    if (!__DEV__) {
       fetchUpdate();
     }
   }, []);
