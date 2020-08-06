@@ -16,8 +16,6 @@ export default function() {
   const dispatch = useDispatch();
   const session = useSelector(state => state.session);
 
-  const updaterURL = env.UPDATER_URL;
-
   useEffect(() => {
     if (session) {
       dispatch(WSActions.wsConnect());
@@ -26,7 +24,7 @@ export default function() {
 
   useEffect(() => {
     const updater = new UpdateAPK.UpdateAPK({
-      apkVersionUrl: updaterURL,
+      apkVersionUrl: env.UPDATER_URL,
       fileProviderAuthority: 'com.mayconbenito.easytalk.provider',
       needUpdateApp: needUpdate => {
         Alert.alert('Nova Atualização disponível', '', [
