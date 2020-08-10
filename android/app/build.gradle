@@ -197,7 +197,31 @@ dependencies {
     implementation "com.facebook.react:react-native:+"  // From node_modules
     implementation 'androidx.appcompat:appcompat:1.1.0-rc01'
     implementation 'androidx.swiperefreshlayout:swiperefreshlayout:1.1.0-alpha02'
-    addUnimodulesDependencies()
+    
+    addUnimodulesDependencies([exclude: [
+        'expo-constants',
+        'expo-file-system',
+        'expo-splash-screen',
+        'expo-font',
+        'expo-location',
+        'expo-sqlite',
+        'expo-linear-gradient',
+        'expo-image-loader',
+        'expo-keep-awake',
+        'expo-task-manager',
+        'expo-error-recovery',
+        'expo-app-loader-provider',
+        'unimodules-font-interface',
+        'unimodules-file-system-interface',
+        'unimodules-face-detector-interface',
+        'unimodules-constants-interface',
+        'unimodules-camera-interface',
+        'unimodules-barcode-scanner-interface',
+        'unimodules-sensors-interface',
+        'unimodules-image-loader-interface',
+        'unimodules-task-manager-interface',
+        'unimodules-app-loader'
+    ]])
 
     if (enableHermes) {
         def hermesPath = "../../node_modules/hermes-engine/android/";
